@@ -24,14 +24,7 @@ namespace Background.Worker.Core.Services
         }
         public async Task SendMessage(string message, string channelKey = "Default")
         {
-            try
-            {
-                await Send(new PostMessage(GetChannelId(channelKey), message));
-            }
-            catch
-            {
-                throw;
-            }
+            await Send(new PostMessage(GetChannelId(channelKey), message));
         }
         private string GetChannelId(string channelKey)
         {
