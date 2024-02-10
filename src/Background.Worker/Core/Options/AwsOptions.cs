@@ -11,5 +11,6 @@ namespace Background.Worker.Core.Options
         public string AccessKey { get; set; } = null!;
         public string SecretKey { get; set; } = null!;
         public string BucketName { get; set; } = null!;
+        public string RegionName { get; set; } = null!;
     }
 }
