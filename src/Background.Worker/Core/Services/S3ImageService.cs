@@ -14,12 +14,10 @@ namespace Background.Worker.Core.Services
     public class S3ImageService : IImageService
     {
         private readonly AwsOptions _awsOptions;
-
         public S3ImageService(IOptions<AwsOptions> awsOptions)
         {
             _awsOptions = awsOptions.Value;
         }
-
         public string Upload(byte[] imageDataByteArray, string fileName)
         {
             using var imageDataStream = new MemoryStream(imageDataByteArray);
@@ -31,7 +29,6 @@ namespace Background.Worker.Core.Services
 
             return filePath;
         }
-
         public string Upload(string base64string, string fileName)
         {
             if (base64string.Contains(","))
@@ -45,7 +42,6 @@ namespace Background.Worker.Core.Services
 
             return filePath;
         }
-
         private void Upload(Stream stream, string filePath)
         {
             using var client = new AmazonS3Client(_awsOptions.AccessKey, _awsOptions.SecretKey, Amazon.RegionEndpoint.GetBySystemName(_awsOptions.RegionName));
@@ -77,7 +73,6 @@ namespace Background.Worker.Core.Services
                 }
             }
         }
-
         public async Task Delete(string fileName)
         {
             using var client = new AmazonS3Client(_awsOptions.AccessKey, _awsOptions.SecretKey, Amazon.RegionEndpoint.GetBySystemName(_awsOptions.RegionName));
