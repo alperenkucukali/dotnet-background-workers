@@ -11,6 +11,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 //Configurations
 builder.Services.Configure<WorkerOptions>(builder.Configuration.GetSection(nameof(WorkerOptions)));
+builder.Services.Configure<AwsOptions>(builder.Configuration.GetSection(nameof(AwsOptions)));
 
 //Services
 builder.Services.AddScoped<IReminderService, ReminderService>();
