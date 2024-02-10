@@ -27,8 +27,8 @@ builder.Services.AddScoped<IScraperService, ScraperService>();
 
 //Workers
 builder.Services.AddHostedService<ScopedWorker>();
-builder.Services.AddScoped<IReminderWorker, ReminderWorker>();
-builder.Services.AddScoped<IScraperWorker, ScraperWorker>();
+builder.Services.AddScoped<IScopedProcessingService, ReminderWorker>();
+builder.Services.AddScoped<IScopedProcessingService, ScraperWorker>();
 
 
 var app = builder.Build();
