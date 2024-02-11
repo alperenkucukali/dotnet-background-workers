@@ -8,7 +8,7 @@ namespace Background.Worker.Entities
 {
     public class ScraperData : BaseEntity
     {
-        public string RelativeImgUrl { get; set; } = null!;
+        public string ImageRelativePath { get; set; } = null!;
         public string Name { get; set; } = null!;
     }
 }
