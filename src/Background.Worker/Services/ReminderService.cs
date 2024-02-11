@@ -29,7 +29,7 @@ namespace Background.Worker.Services
             try
             {
                 var reminderData = await _reminderRepository.Get();
-                if (reminderData is null) reminderData = new();
+                reminderData ??= new();
                 var newReminderData = new ReminderData();
                 try
                 {
@@ -52,7 +52,6 @@ namespace Background.Worker.Services
             {
                 _logger.LogCritical(e, "ReminderService raise an critical error at: {time}", DateTimeOffset.Now);
             }
-
         }
     }
 }
