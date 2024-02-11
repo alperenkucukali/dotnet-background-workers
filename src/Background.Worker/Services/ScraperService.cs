@@ -1,4 +1,5 @@
 ﻿using Background.Worker.Core.Services.Interfaces;
+using Background.Worker.Repositories.Interfaces;
 using Background.Worker.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,11 +14,13 @@ namespace Background.Worker.Services
     {
         private readonly ILogger<ScraperService> _logger;
         private readonly IImageService _imageService;
+        private readonly IScraperRepository _scraperRepository;
 
-        public ScraperService(ILogger<ScraperService> logger, IImageService imageService)
+        public ScraperService(ILogger<ScraperService> logger, IImageService imageService, IScraperRepository scraperRepository)
         {
             _logger = logger;
             _imageService = imageService;
+            _scraperRepository = scraperRepository;
         }
 
         public async Task Start()
