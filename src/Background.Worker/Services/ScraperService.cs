@@ -1,4 +1,7 @@
-﻿using Background.Worker.Core.Services.Interfaces;
+﻿using Background.Worker.Core.Services;
+using Background.Worker.Core.Services.Interfaces;
+using Background.Worker.Entities;
+using Background.Worker.Repositories;
 using Background.Worker.Repositories.Interfaces;
 using Background.Worker.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -27,12 +30,28 @@ namespace Background.Worker.Services
         {
             try
             {
-                //await _imageService.Upload();
+                var scraperData = await _scraperRepository.Get();
+                scraperData ??= new();
+                var newScraperData = new ScraperData();
+                try
+                {
+                    newScraperData.Started = DateTime.UtcNow;
+                    //await _imageService.Upload();
+                    newScraperData.Completed = DateTime.UtcNow;
+                }
+                catch (Exception e)
+                {
+                    newScraperData.Completed = DateTime.UtcNow;
+                    _logger.LogError(e, "ScraperService raise an error at: {time}", DateTimeOffset.Now);
+                }
+                scraperData.Data.Add(newScraperData);
+                await _scraperRepository.Add(scraperData);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ScraperService raise an error at: {time}", DateTimeOffset.Now);
+                _logger.LogCritical(e, "ScraperService raise an critical error at: {time}", DateTimeOffset.Now);
             }
+
         }
     }
 }
