@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Background.Worker.Entities
 {
-    public class BaseEntity
+    public class BaseData<T> where T : BaseEntity
     {
-        public DateTime Started { get; set; }
-        public DateTime Completed { get; set; }
+        public DateTime Created { get; set; }
+        public List<T> Data { get; set; } = null!;
     }
 }

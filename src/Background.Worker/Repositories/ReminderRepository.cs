@@ -10,33 +10,10 @@ using System.Threading.Tasks;
 
 namespace Background.Worker.Repositories
 {
-    public class ReminderRepository : IReminderRepository
+    public class ReminderRepository : BaseRepository<ReminderData>, IReminderRepository
     {
-        private readonly IDistributedCache _redisCache;
-        private const string _key = "Reminder";
-
-        public ReminderRepository(IDistributedCache redisCache)
+        public ReminderRepository(IDistributedCache redisCache) : base(redisCache)
         {
-            _redisCache = redisCache;
-        }
-
-        public async Task Add(ReminderData data)
-        {
-            data.Created = DateTime.UtcNow;
-            var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15));
-            await _redisCache.SetStringAsync(_key, JsonConvert.SerializeObject(data), options);
-        }
-
-        public async Task<ReminderData?> Get()
-        {
-            var reminderData = await _redisCache.GetStringAsync(_key);
-            if (string.IsNullOrEmpty(reminderData)) return null;
-            return JsonConvert.DeserializeObject<ReminderData?>(reminderData);
-        }
-
-        public async Task Delete()
-        {
-            await _redisCache.RemoveAsync(_key);
         }
     }
 }

@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace Background.Worker.Repositories.Interfaces
 {
-    public interface IScraperRepository
+    public interface IScraperRepository : IBaseRepository<ScraperData>
     {
-        Task Add(ScraperData data);
-        Task<ScraperData?> Get();
-        Task Delete();
     }
 }
