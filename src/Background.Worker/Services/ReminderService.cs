@@ -1,4 +1,5 @@
 ﻿using Background.Worker.Core.Services.Interfaces;
+using Background.Worker.Entities;
 using Background.Worker.Repositories.Interfaces;
 using Background.Worker.Services.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -27,12 +28,31 @@ namespace Background.Worker.Services
         {
             try
             {
-                //await _slackService.SendMessage("Hello World!");
+                var reminderData = await _reminderRepository.Get();
+                if (reminderData is null) reminderData = new();
+                var newReminderData = new ReminderData();
+                try
+                {
+                    newReminderData.Started = DateTime.UtcNow;
+                    var msg = "Hello World!";
+                    newReminderData.Message = msg;
+                    newReminderData.Channel = "Default";
+                    await _slackService.SendMessage(msg);
+                    newReminderData.Completed = DateTime.UtcNow;
+                }
+                catch (Exception e)
+                {
+                    newReminderData.Completed = DateTime.UtcNow;
+                    _logger.LogError(e, "ReminderService raise an error at: {time}", DateTimeOffset.Now);
+                }
+                reminderData.Data.Add(newReminderData);
+                await _reminderRepository.Add(reminderData);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ReminderService raise an error at: {time}", DateTimeOffset.Now);
+                _logger.LogCritical(e, "ReminderService raise an critical error at: {time}", DateTimeOffset.Now);
             }
+
         }
     }
 }
