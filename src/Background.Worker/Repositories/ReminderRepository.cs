@@ -23,7 +23,8 @@ namespace Background.Worker.Repositories
         public async Task Add(ReminderData data)
         {
             data.Created = DateTime.UtcNow;
-            await _redisCache.SetStringAsync(_key, JsonConvert.SerializeObject(data));
+            var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromHours(12));
+            await _redisCache.SetStringAsync(_key, JsonConvert.SerializeObject(data), options);
         }
 
         public async Task<ReminderData?> Get()
