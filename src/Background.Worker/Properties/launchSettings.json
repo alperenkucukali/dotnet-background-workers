@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Background.Worker": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    },
+    "Local": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "DOTNET_ENVIRONMENT": "Local"
+      }
+    }
+  }
+}
