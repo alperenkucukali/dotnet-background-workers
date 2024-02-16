@@ -12,7 +12,7 @@ This project is a sample of background tasks with hosted services in .NET 8.
 * **Redis database** connection and containerization
 * **Options Pattern** in ASP.NET Core for Slack, AWS, and worker options
 
-### Docker Compose establishment with all microservices on docker;
+### Docker Compose establishment with all services on docker;
 - Containerization of worker
 - Containerization of database
 - Override Environment variables
